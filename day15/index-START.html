@@ -23,12 +23,40 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <div class='buttons-organization'>
+      <button class="unchecked-items" type="button">unchecked all</button>
+      <button class="checked-items" type="button">checked all </button>
+      <button class="deleted-items" type="button">deleted all </button>
+    </div>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = JSON.parse(localStorage.getItem('items')) || [];
+  const uncheckedItems = document.querySelector('.unchecked-items');
+  const checkedItems = document.querySelector('.checked-items');
+  const deletedItems = document.querySelector('.deleted-items');
+  let items = JSON.parse(localStorage.getItem('items')) || [];
+
+  function uncheckedItem() {
+    items.forEach((item) => {
+      if(item.done) {
+        item.done = false;
+      }
+    });
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
+  }
+
+  function checkedItem() {
+    items.forEach((item) => {
+      if(!item.done) {
+        item.done = true;
+      }
+    });
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
+  }
 
   function addItem(e) {
     e.preventDefault();
@@ -41,6 +69,12 @@
     populateList(items, itemsList);
     localStorage.setItem('items', JSON.stringify(items));
     this.reset();
+  }
+
+  function deletedAll() {
+    populateList([],itemsList);
+    items = [];
+    localStorage.setItem('items', JSON.stringify(items));
   }
 
   function populateList(plates = [], platesList) {
@@ -65,7 +99,12 @@
 
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone);
+  uncheckedItems.addEventListener('click', uncheckedItem);
+  deletedItems.addEventListener('click', deletedAll);
+  checkedItems.addEventListener('click', checkedItem);
+
   populateList(items, itemsList);
+
 
 </script>
 

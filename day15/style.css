@@ -16,6 +16,18 @@ html {
   box-sizing: inherit;
 }
 
+.buttons-organization {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 12px;
+}
+
+button {
+ padding: 10px;
+ outline: 0;
+ border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 svg {
   fill: white;
   background: rgba(0, 0, 0, 0.1);
